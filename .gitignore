@@ -1,0 +1,16 @@
+# Swift build artifacts
+macos/.build/
+macos/dist/
+macos/build/
+
+# macOS
+.DS_Store
+*.DS_Store
+
+# Python (docs scripts)
+__pycache__/
+docs/_frames/
+
+# Xcode
+*.xcuserstate
+.idea/

@@ -1,0 +1,14 @@
+# Swift Package Manager build output
+.build/
+.swiftpm/
+Package.resolved
+
+# Bundled app output
+dist/
+
+# macOS
+.DS_Store
+
+# Xcode (if anyone opens Package.swift in Xcode)
+*.xcodeproj/
+*.xcworkspace/

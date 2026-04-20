@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Basic identity -->
+    <key>CFBundleName</key>
+    <string>QuoteMessage</string>
+    <key>CFBundleDisplayName</key>
+    <string>快速引用消息</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.quotemessage.app</string>
+    <key>CFBundleVersion</key>
+    <string>0.1.0</string>
+    <key>CFBundleShortVersionString</key>
+    <string>0.1.0</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleExecutable</key>
+    <string>QuoteMessage</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+
+    <!-- App icon -->
+    <key>CFBundleIconFile</key>
+    <string>AppIcon</string>
+
+    <!-- Menu-bar-only app -->
+    <key>LSUIElement</key>
+    <true/>
+
+    <key>LSMinimumSystemVersion</key>
+    <string>12.0</string>
+
+    <key>NSHighResolutionCapable</key>
+    <true/>
+
+    <key>NSAccessibilityUsageDescription</key>
+    <string>用于识别聊天消息气泡位置并触发"引用"菜单项。</string>
+
+    <key>NSAppleEventsUsageDescription</key>
+    <string>用于在引用完成后重新激活聊天应用，使输入法能够正常使用。</string>
+</dict>
+</plist>
