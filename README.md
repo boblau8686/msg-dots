@@ -26,8 +26,6 @@ QuoteMessage 把这一连串动作压缩成两次按键：
 - **键盘优先**：默认快捷键 `⌃Q`，菜单里"更改快捷键…"一键录制任意组合（至少一个 ⌃/⌥/⇧/⌘ 修饰键）
 - **自动识别消息气泡**：截图 + 像素分析定位聊天窗口里每条气泡的位置，不读取聊天内容，不依赖微信版本内部 API
 - **字母叠层**：全屏透明 overlay 在每条消息旁画红色圆圈 + 字母（A–H），点击穿透不打扰任何操作
-- **按键独占**：overlay 显示期间用 CGEventTap **吃掉** A–H / Esc，不会漏到微信输入框里多打一个字母
-- **中文输入不被打断**：引用完后微信的输入法焦点完好，不需要"隐藏再显示"抖一下
 - **权限自查面板**：启动时如果缺权限自动弹窗，点对应按钮直接跳转系统设置
 - **Universal Binary**：一个 `.app` 同时支持 Apple Silicon 和 Intel，体积约 650 KB
 
@@ -147,8 +145,8 @@ quote-message/
 
 - ✅ **macOS 12+**（在 macOS 15 / Apple Silicon 上开发验证）
 - ✅ **Intel Mac**（通过 universal binary，同一个 DMG）
-- ❌ **Windows**：计划中
-- ❌ **Linux**：没计划，微信也没 Linux 官方版
+- 🚧 **Windows**：开发中
+- 📋 **Linux**：计划中
 
 ---
 
@@ -209,5 +207,11 @@ MIT
 
 ## Credits
 
-- Swift / AppKit / SwiftUI / CoreGraphics / ApplicationServices（全部 Apple 一方库）
-- 微信 for Mac —— 本项目是面向它的**本地**辅助工具，不联网、不读聊天记录、不改微信行为
+**macOS**
+- Swift / AppKit / SwiftUI / CoreGraphics / ApplicationServices（Apple 一方库）
+
+**Windows**（开发中）
+- C# / .NET / Windows App SDK
+
+**通用**
+- 微信、企业微信、QQ —— 本项目是面向 IM 应用的**本地**辅助工具，不联网、不读聊天记录、不改客户端行为
