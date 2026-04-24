@@ -20,3 +20,5 @@ docs/_frames/
 windows/.vs/
 windows/**/bin/
 windows/**/obj/
+windows/dist/
+windows/release-assets/

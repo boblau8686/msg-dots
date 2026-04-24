@@ -218,7 +218,8 @@ MIT
 - Swift / AppKit / SwiftUI / CoreGraphics / ApplicationServices（Apple 一方库）
 
 **Windows**
-- C# / .NET / Windows App SDK
+- C# / .NET / WPF / WinForms
+- 发布和瘦身方案见 [windows/README.md](windows/README.md)
 
 **通用**
 - 微信、企业微信、QQ —— 本项目是面向 IM 应用的**本地**辅助工具，不联网、不读聊天记录、不改客户端行为
