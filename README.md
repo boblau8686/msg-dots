@@ -8,9 +8,9 @@
 
 | IM 名称 | Windows | macOS 12+<br>(Apple Silicon / Intel) |
 |---|---|---|
-| 微信 | ✓ | ✓ |
-| 企业微信 | ✗ | ✓ |
-| QQ | ✗ | ✗ |
+| 微信 | ✅ | ✅ |
+| 企业微信 | ❌ | ✅ |
+| QQ | ❌ | ❌ |
 
 ![demo](docs/demo.gif)
 
