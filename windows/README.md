@@ -31,7 +31,7 @@ cd windows
 
 输出只有发布文件：
 
-- `windows\release\MsgDots-0.2.0-win-x64-native.zip`
+- `windows\release\MsgDots-0.3.0-win-x64-native.zip`
 
 如果已安装 Inno Setup 6，可以同时生成安装包：
 
@@ -46,8 +46,8 @@ cd windows
 
 给用户发布时只需要二选一：
 
-- 推荐：`windows\release\MsgDots-0.2.0-win-x64-setup.exe`
-- 免安装绿色版：`windows\release\MsgDots-0.2.0-win-x64-native.zip`
+- 推荐：`windows\release\MsgDots-0.3.0-win-x64-setup.exe`
+- 免安装绿色版：`windows\release\MsgDots-0.3.0-win-x64-native.zip`
 
 构建过程中产生的 `.build` 目录只是临时目录，可以随时删除，不需要发布。
 
