@@ -6,11 +6,11 @@
 
 **支持的 IM 列表**
 
-| IM 名称 | Windows | macOS |
+| IM 名称 | Windows | macOS 12+<br>(Apple Silicon / Intel) |
 |---|---|---|
-| 微信 | ✅ 微信 Windows 版 | ✅ 微信 macOS 版（macOS 12+，Apple Silicon / Intel） |
-| 企业微信 | ❌ 企业微信 Windows 版 | ✅ 企业微信 macOS 版（macOS 12+，Apple Silicon / Intel） |
-| QQ | ❌ QQ Windows 版 | ❌ QQ macOS 版 |
+| 微信 | ✓ | ✓ |
+| 企业微信 | ✗ | ✓ |
+| QQ | ✗ | ✗ |
 
 ![demo](docs/demo.gif)
 
