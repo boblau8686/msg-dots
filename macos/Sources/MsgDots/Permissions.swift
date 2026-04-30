@@ -39,23 +39,20 @@ enum Permissions {
 
     /// Order is deliberate: most-critical first.
     ///
-    /// Automation (AppleScript → WeChat / System Events) is intentionally
-    /// absent: the only way to query it is `AEDeterminePermissionToAutomateTarget`,
-    /// which itself triggers a prompt the first time it runs — exactly
-    /// what we want to avoid in a "silent status panel".  macOS will
-    /// prompt for it organically the first time we osascript-activate
-    /// WeChat, which is fine.
+    /// Automation is intentionally absent: the current quote flow uses
+    /// NSRunningApplication activation plus CGEvent / AX APIs, so no
+    /// Apple Events permission is required.
     static let all: [Permission] = [
         Permission(
             id: "input_monitoring",
             nameCN: "输入监控",
-            descCN: "监听全局快捷键（Ctrl+Q 等）",
+            descCN: "监听全局快捷键（Ctrl+D 等）",
             settingsAnchor: "Privacy_ListenEvent"
         ),
         Permission(
             id: "accessibility",
             nameCN: "辅助功能",
-            descCN: "读取微信窗口位置 / 触发\"引用\"菜单",
+            descCN: "读取聊天窗口位置 / 触发\"引用\"菜单",
             settingsAnchor: "Privacy_Accessibility"
         ),
         Permission(

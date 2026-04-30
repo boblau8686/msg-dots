@@ -3,7 +3,7 @@
 //  Persisted hotkey definition + human-readable rendering.
 //
 //  The hotkey is stored as (keyCode, modifierFlags) in UserDefaults.
-//  Default is Ctrl+Q (keyCode 12, .control).  matches(event:) is the
+//  Default is Ctrl+D (keyCode 2, .control).  matches(event:) is the
 //  single source of truth consulted by AppDelegate's key monitor.
 //
 
@@ -11,14 +11,14 @@ import AppKit
 
 struct Hotkey: Equatable {
     /// macOS virtual keyCode — layout-independent.  Using keyCode not
-    /// character means the user can record e.g. "Ctrl+Q" on a Dvorak
+    /// character means the user can record e.g. "Ctrl+D" on a Dvorak
     /// keyboard and have it fire reliably.
     let keyCode: UInt16
     /// Device-independent modifier mask (.command / .option / .control / .shift).
     let modifiers: NSEvent.ModifierFlags
 
     static let `default` = Hotkey(
-        keyCode: 12,           // "q" on ANSI; we store the code, not the char
+        keyCode: 2,            // "d" on ANSI; we store the code, not the char
         modifiers: [.control]
     )
 
@@ -27,7 +27,7 @@ struct Hotkey: Equatable {
         return event.keyCode == keyCode && mods == modifiers
     }
 
-    /// Human display:  "⌃Q", "⌘⇧P", "⌥F1", etc.
+    /// Human display:  "⌃D", "⌘⇧P", "⌥F1", etc.
     var display: String {
         var out = ""
         if modifiers.contains(.control) { out += "⌃" }

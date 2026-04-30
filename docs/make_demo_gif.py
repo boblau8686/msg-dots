@@ -232,7 +232,7 @@ def draw_labels(draw, visible=True, highlight=None):
         draw.text((cx - tw/2 - bbox[0], cy - th/2 - bbox[1]), lbl, font=F_LABEL, fill=C_LABEL_WHITE)
 
 def draw_hotkey(draw, alpha=1.0):
-    txt = "⌃Q"
+    txt = "⌃D"
     tw  = draw.textlength(txt, font=F_HOTKEY)
     bw  = int(tw + 24*s)
     bh  = 34 * s
@@ -304,7 +304,7 @@ for i in range(sec(2.0)):
     add(frame(cursor_vis=(i % 8 < 4)))
 
 # ── Step 2 caption: 按快捷键 ───────────────────────────────
-cap = "按 ⌃Q 触发消息操作"
+cap = "按 ⌃D 触发消息操作"
 for _ in range(sec(1.5)):
     add(frame(caption=cap))
 

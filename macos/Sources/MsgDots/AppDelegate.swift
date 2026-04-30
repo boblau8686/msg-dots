@@ -4,8 +4,8 @@
 //
 //  This is intentionally small.  Its only jobs are:
 //    1. Install the menu-bar status item (the red Q icon + menu).
-//    2. Install a global keyboard monitor so Ctrl+Q is heard even when
-//       WeChat (or any other app) is frontmost.
+//    2. Install a global keyboard monitor so the hotkey is heard even
+//       when WeChat / WeCom is frontmost.
 //
 //  Port status:
 //    ✅ Status item with red circle + white Q
@@ -73,7 +73,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     /// Live overlay instance, kept alive while the user picks a letter.
     /// Nil outside an overlay session — also used as a re-entrancy
-    /// guard so a second Ctrl+Q while the overlay is up is ignored.
+    /// guard so a second hotkey press while the overlay is up is ignored.
     private var activeOverlay: LabelOverlay?
 
     // MARK: - NSApplicationDelegate
@@ -242,13 +242,23 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     /// bubble race (user typing while the detector runs).
     private func startQuoteFlow() {
         if activeOverlay != nil {
-            QMLog.info("ignoring Ctrl+Q: overlay already visible")
+            QMLog.info("ignoring hotkey: overlay already visible")
             return
         }
 
+        guard let (app, pid) = IMAppRegistry.activeIMApp() else {
+            QMLog.info("hotkey ignored: frontmost app is not a supported IM; frontmost=\(IMAppRegistry.frontmostDescription())")
+            return
+        }
+        QMLog.info("targeting \(app.displayName) pid=\(pid)")
+
         let messages: [Message]
         do {
-            messages = try BubbleDetector.detectRecentMessages(limit: Config.maxMessages)
+            messages = try BubbleDetector.detectRecentMessages(
+                app: app,
+                pid: pid,
+                limit: Config.maxMessages
+            )
         } catch {
             QMLog.info("bubble detect failed: \(error)")
             return
@@ -265,7 +275,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             case .picked(let letter, let msg):
                 QMLog.info("quote flow: picked \(letter) at \(msg.center)")
                 do {
-                    try QuoteAction.quoteAt(msg.center)
+                    try QuoteAction.quoteAt(msg, in: app, pid: pid)
                     QMLog.info("quote flow: 引用 triggered")
                 } catch {
                     QMLog.info("quote flow: action failed: \(error)")

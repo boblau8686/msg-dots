@@ -37,7 +37,5 @@
     <key>NSAccessibilityUsageDescription</key>
     <string>用于识别聊天消息气泡位置并触发对应的菜单操作。</string>
 
-    <key>NSAppleEventsUsageDescription</key>
-    <string>用于在操作完成后重新激活聊天应用，使输入法能够正常使用。</string>
 </dict>
 </plist>

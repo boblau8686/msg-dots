@@ -6,7 +6,7 @@
 //    * Shows the current hotkey with a "录制新快捷键" button.
 //    * Clicking the button switches the view into capture mode — the
 //      next modifier-carrying keyDown is recorded and shown.
-//    * "保存" persists via HotkeyConfig; "恢复默认" resets to Ctrl+Q.
+//    * "保存" persists via HotkeyConfig; "恢复默认" resets to Ctrl+D.
 //
 //  Why require a modifier: a bare letter / digit as a global hotkey
 //  would fire on every keystroke typed anywhere, which is not what
@@ -106,7 +106,7 @@ private struct HotkeyRecorderView: View {
 
                 Button("恢复默认") {
                     displayed = .default
-                    hint = "已还原为 ⌃Q — 点「保存」生效"
+                    hint = "已还原为 ⌃D — 点「保存」生效"
                 }
 
                 Spacer()

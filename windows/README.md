@@ -2,6 +2,8 @@
 
 当前 Windows 版是 C# / .NET 8 / WPF + WinForms。功能代码很小，但如果发布成单文件，.NET Runtime、WPF、WinForms、CLR、JIT 和资源文件会显著影响 `MsgDots.exe` 体积；即使是 framework-dependent 单文件，也可能因为 WPF 原生依赖和单文件打包策略变得很大。
 
+企业微信支持当前仅在 macOS 端实验开放；Windows 端仍保持现有微信支持范围。
+
 ## 2026-04-25 实测体积
 
 测试环境：Windows，`Release`，`win-x64`，脚本版本 `0.1.1`，Inno Setup 6.7.1。

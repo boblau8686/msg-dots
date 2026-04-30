@@ -6,8 +6,8 @@
 //
 //  Key points:
 //    * The overlay window itself is transparent and click-through — it
-//      does not steal focus from WeChat.  Key capture is done by the
-//      process-wide NSEvent monitor that also listens for Ctrl+Q.
+//      does not steal focus from the target IM.  Key capture is done by
+//      the process-wide NSEvent monitor that also listens for the hotkey.
 //    * Coordinates: Message rects come from BubbleDetector in CGWindow
 //      space (top-left origin, y grows DOWN).  AppKit window frames
 //      use bottom-left origin.  We convert when placing the overlay
@@ -31,7 +31,7 @@ final class LabelOverlay: KeyCaptureDelegate {
     private var view: OverlayView?
 
     /// CGEventTap that intercepts + SWALLOWS keyDown events while the
-    /// overlay is up.  Without this, WeChat's input field receives the
+    /// overlay is up.  Without this, the chat input receives the
     /// letter (prints "a") at the same moment we trigger the quote.
     private var keyTap: KeyCaptureTap?
 
@@ -59,7 +59,7 @@ final class LabelOverlay: KeyCaptureDelegate {
         for s in screens.dropFirst() { virt = virt.union(s.frame) }
 
         // Borderless, transparent, non-activating panel so the frontmost
-        // app (WeChat) keeps keyboard focus.
+        // target app keeps keyboard focus.
         let panel = NSPanel(
             contentRect: virt,
             styleMask: [.borderless, .nonactivatingPanel],
@@ -98,7 +98,7 @@ final class LabelOverlay: KeyCaptureDelegate {
 
     private func installKeyMonitor() {
         // Primary path: CGEventTap — can SWALLOW the keystroke so it
-        // doesn't also type into WeChat.  Requires Accessibility
+        // doesn't also type into the chat input.  Requires Accessibility
         // permission (which the quote pipeline already needs anyway).
         let tap = KeyCaptureTap(delegate: self)
         if tap.start() {
@@ -107,8 +107,8 @@ final class LabelOverlay: KeyCaptureDelegate {
         }
 
         // Fallback: NSEvent global+local monitor (observe-only).  The
-        // letter WILL leak into WeChat here, but the quote still fires.
-        QMLog.info("falling back to NSEvent monitor (letter will leak to WeChat)")
+        // letter WILL leak into the chat input here, but the quote still fires.
+        QMLog.info("falling back to NSEvent monitor (letter will leak to chat input)")
         let mask: NSEvent.EventTypeMask = [.keyDown]
         let handler: (NSEvent) -> Void = { [weak self] event in
             self?.dispatchKey(event)

@@ -6,8 +6,8 @@
 //  ---------------
 //  `NSEvent.addGlobalMonitorForEvents` is strictly READ-ONLY — it can
 //  see events headed to other apps but cannot stop them.  That's fine
-//  for the Ctrl+Q hotkey, but during the overlay we need to SWALLOW
-//  the overlay letter / Esc keys so they don't also land in WeChat's input field
+//  for the hotkey, but during the overlay we need to SWALLOW the overlay
+//  letter / Esc keys so they don't also land in the chat input field.
 //  (producing the "typed letter then flash" behaviour).
 //
 //  CGEventTap is the only macOS API that can both observe and drop
@@ -162,7 +162,7 @@ final class KeyCaptureTap {
         switch decision {
         case .swallow:
             me.delegate?.keyCaptureSwallowed(event: nsEvent)
-            return nil  // drop event — WeChat never sees it
+            return nil  // drop event — the chat app never sees it
         case .passthrough:
             return Unmanaged.passUnretained(cgEvent)
         }

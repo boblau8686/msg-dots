@@ -17,7 +17,7 @@
 | 软件 | 状态 |
 |------|------|
 | 微信 | ✅ 已支持 |
-| 企业微信 | 📋 计划中 |
+| 企业微信 | 🟡 macOS 实验支持 |
 | QQ | 📋 计划中 |
 
 ![demo](docs/demo.gif)
@@ -26,20 +26,20 @@
 
 ## 为什么写这个
 
-微信 Mac 版引用一条消息的标准操作是：把鼠标移到气泡上 → 右键 → 在弹出菜单里找"引用"→ 再点一下。消息一多、或者用外接键盘时，来回操作鼠标很打断节奏。
+微信 / 企业微信 Mac 版引用一条消息的标准操作是：把鼠标移到气泡上 → 右键 → 在弹出菜单里找"引用"→ 再点一下。消息一多、或者用外接键盘时，来回操作鼠标很打断节奏。
 
 MsgDots 把这一连串动作压缩成两次按键：
 
-1. `Ctrl+Q`（可改）触发
+1. `Ctrl+D`（可改）触发
 2. `A / B / C / …` 选中要引用的那一条
 
-全程键盘完成，操作完成后微信输入框直接可以继续输入中文，没有焦点抖动。
+全程键盘完成，操作完成后聊天输入框直接可以继续输入中文，没有焦点抖动。
 
 ---
 
 ## 功能概览
 
-- **键盘优先**：默认快捷键 `⌃Q`，菜单里"更改快捷键…"一键录制任意组合（至少一个 ⌃/⌥/⇧/⌘ 修饰键）
+- **键盘优先**：默认快捷键 `⌃D`，菜单里"更改快捷键…"一键录制任意组合（至少一个 ⌃/⌥/⇧/⌘ 修饰键）
 - **自动识别消息气泡**：截图 + 像素分析定位聊天窗口里每条气泡的位置，不读取聊天内容，不依赖微信版本内部 API
 - **红色字母点**：全屏透明 overlay 在每条可见消息旁画红色圆圈 + 字母（A-Z，按实际可见消息数显示），点击穿透不打扰任何操作
 - **权限自查面板**：启动时如果缺权限自动弹窗，点对应按钮直接跳转系统设置
@@ -92,7 +92,7 @@ cd msg-dots/macos
 |---|---|---|
 | **输入监控** | 监听全局快捷键（NSEvent global monitor） | 按快捷键完全没反应 |
 | **辅助功能** | 点击右键菜单里的"引用"、合成鼠标事件 | 触发后看不到字母圈 / 引用没执行 |
-| **屏幕录制** | 截图做气泡识别 | 出现"无法捕获微信窗口"错误 |
+| **屏幕录制** | 截图做气泡识别 | 出现"无法捕获聊天窗口"错误 |
 
 > **未签名 app 的小坑**：自己 `./build.sh` 重新编译后，macOS 认为这是"不同的 app"，之前授权的三项都会失效。在系统设置里删了重加有时也不管用——最可靠的方法是用命令行彻底重置：
 > ```bash
@@ -104,13 +104,15 @@ cd msg-dots/macos
 
 ## 日常用法
 
-1. 光标在微信输入框里
-2. 按 `⌃Q`（或你自己设的快捷键）
+1. 光标在微信或企业微信输入框里
+2. 按 `⌃D`（或你自己设的快捷键）
 3. 屏幕上每条可见消息旁出现红色字母圈（A = 最新，往上 B、C、D…，最多到 Z）
 4. 按对应字母键 → 自动触发"引用"
 5. 按 `Esc` 随时取消
 
 想改快捷键：菜单栏红色 `M` 图标 → "更改快捷键…"→"录制"→按下你想用的组合 → 保存。
+
+已保存过自定义快捷键的老用户升级后仍使用原来的自定义值；没有自定义过的用户会使用新的默认 `⌃D`。
 
 ---
 
@@ -122,7 +124,7 @@ cd msg-dots/macos
 - **截图 + 识别**：`CGWindowListCreateImage` → `CGContext` 重绘为 RGBA8 → 手写像素分析（直方图 mode 估背景、逐行检测气泡带、判断左右对齐）
 - **覆盖层**：`NSPanel` + `nonactivatingPanel` + `statusBar` 级别，全屏跨所有 Space
 - **右键 + 菜单点击**：`CGEvent.post(tap: .cgSessionEventTap)`（Session tap 而不是 HID tap — 前者在 IMS 之上，不会打断中文输入法状态）
-- **菜单坐标定位**：通过 `CGWindowListCopyWindowInfo` 轮询新弹出的小窗口，用几何位置点击倒数第二项（"引用"）
+- **菜单坐标定位**：优先通过 Accessibility 按标题查找"引用"/"回复"，找不到时再通过 `CGWindowListCopyWindowInfo` 轮询新弹出的小窗口做几何兜底
 - **权限探测**：`IOHIDCheckAccess` / `AXIsProcessTrusted` / `CGPreflightScreenCaptureAccess`，全部非打扰式（不会弹授权框）
 - **日志**：`os.Logger`（统一日志）+ `/tmp/msgdots.log`（兜底文件），打包版也能查
 - **持久化**：`UserDefaults` 存自定义快捷键
@@ -136,12 +138,14 @@ msg-dots/
 │   ├── Sources/MsgDots/
 │   │   ├── main.swift                  # NSApplication 入口
 │   │   ├── AppDelegate.swift           # 状态栏 + 快捷键监听 + 管线调度
-│   │   ├── Config.swift                # 全局常量（bundle id、阈值、颜色）
+│   │   ├── Config.swift                # 全局常量（颜色、通用阈值）
+│   │   ├── IMApp.swift                 # 微信 / 企业微信配置与前台匹配
 │   │   ├── Message.swift               # 检测结果数据类型
 │   │   ├── BubbleDetector.swift        # 截图 + 像素分析
 │   │   ├── LabelOverlay.swift          # 透明叠层 + CGEventTap 按键吞噬
 │   │   ├── KeyCaptureTap.swift         # CGEventTap 封装（overlay 专用）
-│   │   ├── QuoteAction.swift           # 右键 → 找弹窗 → 点"引用"
+│   │   ├── QuoteAction.swift           # 右键 → 找菜单项 → 点"引用"
+│   │   ├── MenuItemFinder.swift        # AX 菜单项标题查找
 │   │   ├── HotkeyConfig.swift          # 快捷键持久化
 │   │   ├── HotkeyRecorderWindow.swift  # "录制新快捷键"窗口
 │   │   ├── Permissions.swift           # TCC 静默探测
@@ -166,17 +170,17 @@ msg-dots/
 - 启动时 `perm: xxx = denied` 会列出哪些没授权
 
 **识别不到消息气泡？**
-`BubbleDetector` 的阈值在 `Config.swift` 里：
+`BubbleDetector` 的阈值在 `IMApp.swift` 里：
 - 深色模式 / 浅色模式都支持（背景色是动态估计的，不是硬编码）
-- 如果你魔改了微信主题，可能要调 `bubbleBGThreshold`、`sentGreenDelta`
+- 如果你魔改了微信 / 企业微信主题，可能要调对应应用的 `bubbleBGThreshold`、`sentGreenDelta`
 - 日志里会打 `bg estimate rgb=(...)` 和 `found N vertical bands` / `after filtering: N bubbles`
 
 **引用了下一条消息 / 上一条消息？**
-右键菜单的坐标偏了，调 `Config.swift` 里的 `popupBottomPadPt`：
+AX 菜单查找失败后会走几何兜底。如果右键菜单坐标偏了，调 `IMApp.swift` 里对应应用的 `geometricFallback`：
 - 点到了"删除" → 调大
 - 点到了"引用"上一项 → 调小
 
-**快捷键和系统或 Terminal 冲突（比如 `⌃Q` 在 iTerm 里是关闭 tab）？**
+**快捷键和系统或 Terminal 冲突（比如 `⌃D` 在 shell 里是 EOF）？**
 菜单栏 → 更改快捷键…→ 换成任意组合，比如 `⌥⇧Q` 或 `⌘⌥Q`。
 
 ---
