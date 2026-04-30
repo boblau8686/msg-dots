@@ -4,21 +4,13 @@
 
 不用鼠标、不用切换窗口、不用进右键菜单翻找，适合在群里快速接话，也为撤回、放大图片等更多动作预留空间。
 
-**平台支持**
+**支持的 IM 列表**
 
-| 平台 | 状态 |
-|------|------|
-| macOS 12+（Apple Silicon / Intel） | ✅ 已支持 |
-| Windows | ✅ 已支持 |
-| Linux | 📋 计划中 |
-
-**IM 软件支持**
-
-| 软件 | 状态 |
-|------|------|
-| 微信 | ✅ 已支持 |
-| 企业微信 | 🟡 macOS 实验支持 |
-| QQ | 📋 计划中 |
+| IM 名称 | Windows | macOS |
+|---|---|---|
+| 微信 | ✅ 微信 Windows 版 | ✅ 微信 macOS 版（macOS 12+，Apple Silicon / Intel） |
+| 企业微信 | ❌ 企业微信 Windows 版 | ✅ 企业微信 macOS 版（macOS 12+，Apple Silicon / Intel） |
+| QQ | ❌ QQ Windows 版 | ❌ QQ macOS 版 |
 
 ![demo](docs/demo.gif)
 

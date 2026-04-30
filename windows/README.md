@@ -6,15 +6,15 @@
 
 ## 2026-04-25 实测体积
 
-测试环境：Windows，`Release`，`win-x64`，脚本版本 `0.1.1`，Inno Setup 6.7.1。
+测试环境：Windows，`Release`，`win-x64`，脚本版本 `0.2.0`，Inno Setup 6.7.1。
 
 | 发布方式 | 输出 | 实测体积 | 备注 |
 |---|---|---:|---|
 | framework-dependent + single-file | `windows\dist\publish-framework-win-x64\MsgDots.exe` | 139.52 MB | 需要 .NET 8 Desktop Runtime；当前脚本仍生成单文件 |
-| framework-dependent + zip | `windows\release-assets\MsgDots-0.1.1-win-x64-framework.zip` | 58.19 MB | 可用于安装器输入 |
-| framework-dependent + Inno Setup | `windows\release-assets\MsgDots-0.1.1-win-x64-setup.exe` | 44.63 MB | 安装时检测 .NET 8 Desktop Runtime |
+| framework-dependent + zip | `windows\release-assets\MsgDots-0.2.0-win-x64-framework.zip` | 58.19 MB | 可用于安装器输入 |
+| framework-dependent + Inno Setup | `windows\release-assets\MsgDots-0.2.0-win-x64-setup.exe` | 44.63 MB | 安装时检测 .NET 8 Desktop Runtime |
 | self-contained + compressed single-file | `windows\dist\publish-self-contained-win-x64\MsgDots.exe` | 63.38 MB | 用户无需预装 .NET |
-| self-contained + zip | `windows\release-assets\MsgDots-0.1.1-win-x64-self-contained.zip` | 58.07 MB | 与 framework zip 基本相同 |
+| self-contained + zip | `windows\release-assets\MsgDots-0.2.0-win-x64-self-contained.zip` | 58.07 MB | 与 framework zip 基本相同 |
 
 基于 2026-04-25 的实测，推荐主发布 `framework-dependent` 安装包，同时提供 `self-contained` 压缩 zip 作为免运行时备用。安装包体积最小，为 44.63 MB，并能在安装时检测 .NET 8 Desktop Runtime；self-contained zip 为 58.07 MB，适合不想让用户单独安装运行时的场景。
 
@@ -32,9 +32,9 @@ cd windows
 输出：
 
 - `windows\dist\publish-framework-win-x64\MsgDots.exe`
-- `windows\release-assets\MsgDots-0.1.1-win-x64-framework.zip`
+- `windows\release-assets\MsgDots-0.2.0-win-x64-framework.zip`
 - 如果已安装 Inno Setup 6 且 `ISCC.exe` 在 `PATH` 中，还会生成安装包：
-  `windows\release-assets\MsgDots-0.1.1-win-x64-setup.exe`
+  `windows\release-assets\MsgDots-0.2.0-win-x64-setup.exe`
 
 安装器逻辑在 `installer\MsgDots.iss`：
 
